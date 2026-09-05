@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FYP Week Vault 🎓</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Firebase Compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>FYP Week Memories '26 🎓</h1>
+    <p>Upload your moments. Built to stay forever.</p>
+  </header>
+
+  <main class="container">
+    <!-- Upload Card -->
+    <section class="upload-card">
+      <h2>Add a Memory</h2>
+      <form id="memoryForm">
+        <div class="input-group">
+          <label for="uploaderName">Your Name / Nickname</label>
+          <input type="text" id="uploaderName" placeholder="e.g., John Doe" required>
+        </div>
+
+        <div class="input-group">
+          <label for="eventTag">Select Event</label>
+          <select id="eventTag">
+            <option value="Jean Carnival">Jean Carnival</option>
+            <option value="Cultural Day">Cultural Day</option>
+            <option value="Corporate / Old School">Corporate / Old School</option>
+            <option value="Sign-Out / Defense">Sign-Out / Defense</option>
+            <option value="Dinner & Awards">Dinner & Awards</option>
+            <option value="General Vibes">General Vibes</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="caption">Caption / Memory</label>
+          <input type="text" id="caption" placeholder="A quote, memory, or tag...">
+        </div>
+
+        <div class="input-group">
+          <label for="imageInput">Choose Photo</label>
+          <input type="file" id="imageInput" accept="image/*" required>
+        </div>
+
+        <button type="submit" id="submitBtn">Share Memory 🚀</button>
+      </form>
+      <div id="statusMessage" class="status-msg"></div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+      <div class="gallery-header">
+        <h2>Live Memory Wall</h2>
+        <span id="photoCount" class="badge">0 photos</span>
+      </div>
+
+      <div id="galleryGrid" class="gallery-grid">
+        <!-- Cards will load here automatically -->
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
