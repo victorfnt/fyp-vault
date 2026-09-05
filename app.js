@@ -34,16 +34,21 @@ const lightboxCaption = document.getElementById("lightboxCaption");
 const closeLightbox = document.getElementById("closeLightbox");
 const downloadBtn = document.getElementById("downloadBtn");
 
-// Lightbox dismiss triggers
-closeLightbox.addEventListener("click", () => lightboxModal.classList.remove("active"));
+// Lightbox dismiss helper (restores page scrolling)
+const closeGalleryLightbox = () => {
+  lightboxModal.classList.remove("active");
+  document.body.style.overflow = "auto";
+};
+
+closeLightbox.addEventListener("click", closeGalleryLightbox);
 lightboxModal.addEventListener("click", (e) => {
   if (e.target === lightboxModal) {
-    lightboxModal.classList.remove("active");
+    closeGalleryLightbox();
   }
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
-    lightboxModal.classList.remove("active");
+    closeGalleryLightbox();
   }
 });
 
@@ -139,6 +144,7 @@ db.collection("memories").onSnapshot((snapshot) => {
       lightboxCaption.innerHTML = `<strong>${data.uploader}</strong>: ${data.caption || "Captured moment"}`;
       downloadBtn.href = data.imageUrl;
       lightboxModal.classList.add("active");
+      document.body.style.overflow = "hidden"; // Locks screen to prevent page shifting
     });
 
     galleryGrid.appendChild(card);
