@@ -28,6 +28,25 @@ const statusMessage = document.getElementById("statusMessage");
 const galleryGrid = document.getElementById("galleryGrid");
 const photoCount = document.getElementById("photoCount");
 
+const lightboxModal = document.getElementById("lightboxModal");
+const lightboxImg = document.getElementById("lightboxImg");
+const lightboxCaption = document.getElementById("lightboxCaption");
+const closeLightbox = document.getElementById("closeLightbox");
+const downloadBtn = document.getElementById("downloadBtn");
+
+// Lightbox dismiss triggers
+closeLightbox.addEventListener("click", () => lightboxModal.classList.remove("active"));
+lightboxModal.addEventListener("click", (e) => {
+  if (e.target === lightboxModal) {
+    lightboxModal.classList.remove("active");
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    lightboxModal.classList.remove("active");
+  }
+});
+
 // ==========================================
 // 4. HANDLE UPLOADS
 // ==========================================
@@ -50,7 +69,6 @@ memoryForm.addEventListener("submit", async (e) => {
   statusMessage.style.color = "#0284c7";
 
   try {
-    // 1. Send file directly to Cloudinary
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
@@ -70,7 +88,6 @@ memoryForm.addEventListener("submit", async (e) => {
 
     statusMessage.innerText = "Saving memory...";
 
-    // 2. Save record in Firebase Firestore
     await db.collection("memories").add({
       uploader: name,
       event: eventTag,
@@ -92,7 +109,7 @@ memoryForm.addEventListener("submit", async (e) => {
 });
 
 // ==========================================
-// 5. SYNC GALLERY IN REAL TIME
+// 5. SYNC GALLERY & LIGHTBOX CLICK
 // ==========================================
 db.collection("memories").onSnapshot((snapshot) => {
   galleryGrid.innerHTML = "";
@@ -115,8 +132,17 @@ db.collection("memories").onSnapshot((snapshot) => {
         <span class="card-author">Uploaded by <strong>${data.uploader}</strong></span>
       </div>
     `;
+
+    const imgElement = card.querySelector("img");
+    imgElement.addEventListener("click", () => {
+      lightboxImg.src = data.imageUrl;
+      lightboxCaption.innerHTML = `<strong>${data.uploader}</strong>: ${data.caption || "Captured moment"}`;
+      downloadBtn.href = data.imageUrl;
+      lightboxModal.classList.add("active");
+    });
+
     galleryGrid.appendChild(card);
-  }); 
+  });
 }, (err) => {
   console.error("Firestore listener error:", err);
 });

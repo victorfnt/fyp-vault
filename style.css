@@ -23,38 +23,39 @@ body {
 
 .hero {
   text-align: center;
-  padding: 40px 20px 24px;
+  padding: 32px 16px 20px;
   background: white;
   border-bottom: 1px solid var(--border);
 }
 
 .hero h1 {
-  font-size: 2rem;
-  margin-bottom: 8px;
+  font-size: 1.6rem;
+  margin-bottom: 6px;
 }
 
 .hero p {
   color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 .container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 16px;
 }
 
 .upload-card {
   background: var(--card-bg);
-  padding: 24px;
+  padding: 18px;
   border-radius: 12px;
   border: 1px solid var(--border);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  margin-bottom: 36px;
+  margin-bottom: 28px;
 }
 
 .upload-card h2 {
-  font-size: 1.25rem;
-  margin-bottom: 16px;
+  font-size: 1.15rem;
+  margin-bottom: 14px;
 }
 
 .input-group {
@@ -72,12 +73,13 @@ body {
 
 .input-group input,
 .input-group select {
-  padding: 10px 12px;
+  padding: 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   outline: none;
   background: #fff;
+  width: 100%;
 }
 
 .input-group input:focus,
@@ -87,7 +89,7 @@ body {
 
 button[type="submit"] {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   background: var(--primary);
   color: white;
   border: none;
@@ -129,24 +131,40 @@ button:disabled {
   font-weight: 600;
 }
 
+/* Responsive feed grid */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 640px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .upload-card {
+    padding: 24px;
+  }
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
 }
 
 .card {
   background: white;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--border);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
+/* Preserves original full image aspect ratio */
 .card img {
   width: 100%;
-  height: 240px;
-  object-fit: cover;
+  height: auto;
+  max-height: 540px;
+  object-fit: contain;
+  background-color: #0f172a;
   display: block;
 }
 
@@ -169,6 +187,7 @@ button:disabled {
   font-size: 0.95rem;
   margin-bottom: 8px;
   line-height: 1.4;
+  word-break: break-word;
 }
 
 .card-author {
