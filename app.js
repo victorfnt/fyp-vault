@@ -142,9 +142,14 @@ db.collection("memories").onSnapshot((snapshot) => {
     imgElement.addEventListener("click", () => {
       lightboxImg.src = data.imageUrl;
       lightboxCaption.innerHTML = `<strong>${data.uploader}</strong>: ${data.caption || "Captured moment"}`;
-      downloadBtn.href = data.imageUrl;
+      
+      // Forces browser download by inserting Cloudinary's attachment flag
+      const directDownloadUrl = data.imageUrl.replace("/upload/", "/upload/fl_attachment/");
+      downloadBtn.href = directDownloadUrl;
+      downloadBtn.setAttribute("download", `${data.uploader}_memory.jpg`);
+
       lightboxModal.classList.add("active");
-      document.body.style.overflow = "hidden"; // Locks screen to prevent page shifting
+      document.body.style.overflow = "hidden";
     });
 
     galleryGrid.appendChild(card);
